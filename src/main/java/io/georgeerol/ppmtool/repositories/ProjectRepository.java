@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
  * Created by George Fouche on 4/28/19.
  */
 @Repository
-public interface ProjectRepository extends CrudRepository<Project,Long> {
-    @Override
-    Iterable<Project> findAllById(Iterable<Long> iterable);
+public interface ProjectRepository extends CrudRepository<Project, Long> {
+
+
 }
