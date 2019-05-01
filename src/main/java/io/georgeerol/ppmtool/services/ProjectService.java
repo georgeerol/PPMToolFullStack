@@ -16,28 +16,39 @@ public class ProjectService {
     private ProjectRepository projectRepository;
 
 
-    public Project saveOrUpdateProject(Project project){
+    public Project saveOrUpdateProject(Project project) {
 
         //Logic
-        try{
+        try {
             project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
             return projectRepository.save(project);
 
-        }catch (Exception e){
-            throw new ProjectIdException("Project ID '"+project.getProjectIdentifier().toUpperCase()+"' already exists");
+        } catch (Exception e) {
+            throw new ProjectIdException("Project ID '" + project.getProjectIdentifier().toUpperCase() + "' already exists");
         }
     }
 
-    public Project findByProjectIdentifier(String projectId){
+    public Project findByProjectIdentifier(String projectId) {
         Project project = projectRepository.findByProjectIdentifier(projectId.toUpperCase());
-        if(project == null){
-            throw new ProjectIdException("Project ID '"+ projectId.toUpperCase()+"' does not exist");
+        if (project == null) {
+            throw new ProjectIdException("Project ID '" + projectId.toUpperCase() + "' does not exist");
         }
         return project;
     }
 
-    public Iterable<Project> findAllProjects(){
+    public Iterable<Project> findAllProjects() {
         return projectRepository.findAll();
+    }
+
+
+    public void deleteProjectByIdentifier(String projectid){
+        Project project = projectRepository.findByProjectIdentifier(projectid.toUpperCase());
+
+        if(project == null){
+            throw  new  ProjectIdException("Cannot Project with ID '"+projectid+"'. This project does not exist");
+        }
+
+        projectRepository.delete(project);
     }
 
 }
